@@ -47,6 +47,16 @@ def search(request):
     if not q:
         error = True
     else:
+        x = es.indices.get(index='hack-index', ignore=[400, 404])
+        print json.dumps(x,indent=4)
+        if 'status' not in x:
+            if query == '':
+                x = es.search(index='test-index', doc_type='', body={"query": {"match_all": {}}})
+            else:
+                x = es.search(index='test-index', doc_type='', body={"query": {"match": {"body": query}}})
+            print json.dumps(x, indent=4)
+            for i in x['hits']['hits']:
+                    print i['_id']
         movies = Movie.objects.filter(title__icontains=q)
         return render(request, 'search_results.html',
                       {'movies': movies, 'query': q})
