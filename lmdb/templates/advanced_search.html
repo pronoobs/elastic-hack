@@ -14,8 +14,8 @@
     <!-- Bootstrap core CSS -->
     
     <link rel='stylesheet' href='/static/css/bootstrap.min.css'/>
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel='stylesheet' href='/static/css/style.css'/>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link rel='stylesheet' href='/static/css/ie10-viewport-bug-workaround.css'/>
 
     <!-- Custom styles for this template -->
@@ -39,7 +39,7 @@
       <form class="form-signin" method="POST" action='.'>
       {% csrf_token %}          {% csrf_token %}
 
-        <h2 class="form-signin-heading">Advanced Search</h2>
+        <h1 >Advanced Search</h1>
 
 
         
@@ -56,8 +56,8 @@
         <label for="{{form.director.id_for_label}}" class="sr-only">Ditector</label>
         <input name="director" type="text" id="title3" class="form-control" placeholder="Director" required="" autofocus="">
 -->
-<p><label for="id_title">Title:</label> <input id="id_title" maxlength="30" name="title" type="text" /></p>
-<p><label for="id_actors">Actors:</label> <select multiple="multiple" id="id_actors" name="actors">
+<p><label for="id_title"></label> <input id="id_title" class="form-control" maxlength="30" name="title" type="text" placeholder="Title"/></p>
+<p><label for="id_actors"></label> <select multiple="multiple" class="form-control"  id="id_actors" placeholder="Actors" name="actors">
 <option value="1">MOHD HUZAIFA FARUQUI</option>
 <option value="2">Gaurav Arora</option>
 </select></p>
@@ -68,15 +68,16 @@
 
      
         
-       <label for="id_genres_0">Genres:</label> <ul id="id_genres"><li><label for="id_genres_0"><input id="id_genres_0" name="genres" type="checkbox" value="action" /> ACTION</label></li>
-<li><label for="id_genres_1"><input id="id_genres_1" name="genres" type="checkbox" value="comedy" /> COMEDY</label></li>
-<li><label for="id_genres_2"><input id="id_genres_2" name="genres" type="checkbox" value="romance" /> ROMANCE</label></li>
-<li><label for="id_genres_3"><input id="id_genres_3" name="genres" type="checkbox" value="thriller" /> THRILLER</label></li>
-<li><label for="id_genres_4"><input id="id_genres_4" name="genres" type="checkbox" value="drama" /> DRAMA</label></li></ul>
-<p><label for="id_plot">Plot:</label> <textarea cols="40" id="id_plot" name="plot" rows="10">
+       <label for="id_genres_0"></label> <ul id="id_genres">
+       <li class="checkbox"><label for="id_genres_0"><input id="id_genres_0" name="genres" type="checkbox" value="action" /> ACTION</label></li>
+<li class="checkbox"><label for="id_genres_1"><input id="id_genres_1" name="genres" type="checkbox" value="comedy" /> COMEDY</label></li>
+<li class="checkbox"><label for="id_genres_2"><input id="id_genres_2" name="genres" type="checkbox" value="romance" /> ROMANCE</label></li>
+<li class="checkbox"><label for="id_genres_3"><input id="id_genres_3" name="genres" type="checkbox" value="thriller" /> THRILLER</label></li>
+<li class="checkbox"><label for="id_genres_4"><input id="id_genres_4" name="genres" type="checkbox" value="drama" /> DRAMA</label></li></ul>
+<p><label for="id_plot"></label> <textarea class="form-control"  cols="40" id="id_plot" name="plot" placeholder="Keywords" rows="10">
 </textarea></p>
 <label for="id_minr">Minimum Rating:</label>
-<select id="id_minr" name="minr">
+<select class="form-control" id="id_minr" name="minr">
   <option value="1">1</option>
   <option value="2">2</option>
   <option value="3">3</option>
@@ -87,7 +88,7 @@
 <p></p> 
  <!--{{form.as_p}}-->
 
-<button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+<button class="btn btn-lg btn-danger btn-block" type="submit">Search</button>
      
      
      

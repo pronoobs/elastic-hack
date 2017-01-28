@@ -108,19 +108,28 @@ def create_comment(sender, instance, **kwargs):
 @receiver(post_delete, sender=Movie)
 def delete_movie(sender, instance, **kwargs):
     es = Elasticsearch()
-    es.delete(index='hack-index', doc_type='Movie', id=instance.id)
-
+    try:    
+        es.delete(index='hack-index', doc_type='Movie', id=instance.id)
+    except: 
+        pass
 @receiver(post_delete, sender=Actor)
 def delete_actor(sender, instance, **kwargs):
     es = Elasticsearch()
-    es.delete(index='hack-index', doc_type='Actor', id=instance.id)
-
+    try:
+        es.delete(index='hack-index', doc_type='Actor', id=instance.id)
+    except:
+        pass
 @receiver(post_delete, sender=Director)
 def delete_director(sender, instance, **kwargs):
     es = Elasticsearch()
-    es.delete(index='hack-index', doc_type='Director', id=instance.id)
-
+    try: 
+        es.delete(index='hack-index', doc_type='Director', id=instance.id)
+    except:
+        pass
 @receiver(post_delete, sender=Comment)
 def delete_comment(sender, instance, **kwargs):
     es = Elasticsearch()
-    es.delete(index='hack-index', doc_type='Comment', id=instance.id)    
+    try:
+        es.delete(index='hack-index', doc_type='Comment', id=instance.id)
+    except:
+        pass    
