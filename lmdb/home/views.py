@@ -29,7 +29,7 @@ def advanced(request):
         m1=[]
 
         q=form.cleaned_data['plot']
-        es=Elasticsearch()    
+        es=Elasticsearch()
         x = es.indices.get(index='hack-index', ignore=[400, 404])
         print json.dumps(x,indent=4)
         if 'status' not in x:
@@ -51,7 +51,7 @@ def advanced(request):
             print json.dumps(x, indent=4)
             for i in x['hits']['hits']:
                      m1.append(i['_source']['movie'])
-        
+
 
         movies = (Movie.objects.filter(title__icontains=f1) | Movie.objects.filter(actors__in=f2)).filter(
             genre__in=genres).filter(pk__in=m2).filter(pk__in=m1)
@@ -77,20 +77,25 @@ def search(request):
 
 
 def register_page(request):
+    email2=''
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
-            username = form.cleaned_data['username'],
-            password = form.cleaned_data['password1'],
-            User.objects.create_user(username=username, password=password, email=email,
-                                     first_name=form.cleaned_data['name'])
-            send_mail(subject='Welcome to LMDB', message='Greetings!', from_email='lab.movie.database@gmail.com',
-                      recipient_list=[email])
+            email2=form.cleaned_data['email']
+            user2=form.cleaned_data['username']
+            password2=form.cleaned_data['password1']
+            user = User.objects.create_user(
+            username=form.cleaned_data['username'],
+            password=form.cleaned_data['password1'],
+            email=form.cleaned_data['email'],
+            #email2=form.cleaned_data['email'],
+            first_name=form.cleaned_data['name'])
+            content='Thanks for joining our network !!! \n Your account details are -- \n User name : '+user2+'\n Password : '+password2
             return HttpResponseRedirect('/')
     else:
         form = RegistrationForm()
-    return render(request, 'registration/register.html', ({'form': form}))
+    return render(request,'registration/register.html',({'form':form}))
+
 
 
 def logout_page(request):
