@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>MovieHunter</title>
+<title>LMDB</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="/static/css/style.css" type="text/css" media="all" />
 <script type="text/javascript" src="/static/js/jquery-1.4.2.min.js"></script>
@@ -24,16 +24,16 @@
     <div id="navigation">
       <ul>
         <li><a class="active" href="/">HOME</a></li>
-        
+
          {% if user.is_authenticated %}
       <li>Welcome {{ user.username }}</li>
       <li><a href="/logout/">Logout</a></li>
-        
+
         {% else %}
-         <li>Welcome anonymous</li> 
+         <li>Welcome anonymous</li>
         <li><a href="/register/">Signup</a></li>
         <li><a href="/login/">Login</a></li>
-        
+
 
 
         {% endif %}
@@ -51,7 +51,7 @@
       </ul>-->
       <ul><li style="padding-left:20em"><a href="/advanced/">ADVANCED SEARCH</a></li></ul>
       <div id="search">
-     
+
         <form action="/search/" method="get" accept-charset="utf-8">
           <label for="search-field">SEARCH</label>
           <input type="text" name="q" placeholder="Enter search here" id="search-field" class="blink search-field"  />
@@ -64,7 +64,7 @@
     <div id="content">
       <div class="box">
         <div class="head">
- 
+
 {% block content %}
             {% endblock %}
 <div class="cl">&nbsp;</div>
@@ -73,7 +73,7 @@
 </div>
   <div id="footer">
     <p class="lf">Copyright &copy; 2016 <a href="#">LMDb</a> - All Rights Reserved</p>
-    <p class="rf">Design by Gaurav, Huzaifa and Tafseer</p>
+    <p class="rf">Design by Gaurav, Huzaifa , Ajitesh and Abhishek</p>
     <div style="clear:both;"></div>
   </div>
 </div>
