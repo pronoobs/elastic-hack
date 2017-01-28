@@ -42,7 +42,7 @@ class CommentForm(forms.ModelForm):
 class SearchForm(forms.ModelForm):
     genres = forms.MultipleChoiceField(choices=Movie.genres, widget=forms.CheckboxSelectMultiple, label="Genres:")
     # rating=forms.MultipleChoiceField(choices=Comment.RATINGS,widget=forms.CheckboxSelectMultiple,label="rating:")
-
+    
     minr = forms.IntegerField()
 
     class Meta:
