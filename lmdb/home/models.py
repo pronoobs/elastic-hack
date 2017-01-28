@@ -79,44 +79,44 @@ class Comment(models.Model):
 #https://coderwall.com/p/ktdb3g/django-signals-an-extremely-simplified-explanation-for-beginners
 #https://docs.djangoproject.com/en/1.9/topics/signals/
 @receiver(post_save, sender=Movie)
-def create_doc(sender, instance, **kwargs):
+def create_movie(sender, instance, **kwargs):
     es = Elasticsearch()
-    es.index(index='hack-index', doc_type='Movie', body=model_to_dict(instance, exclude=['id']), id=instance.id)
+    es.index(index='hack-index', doc_type='Movie', body=model_to_dict(instance, exclude=['id','image']), id=instance.id)
 
 @receiver(post_save, sender=Actor)
-def create_doc(sender, instance, **kwargs):
+def create_actor(sender, instance, **kwargs):
     es = Elasticsearch()
     es.index(index='hack-index', doc_type='Actor', body=model_to_dict(instance, exclude=['id']), id=instance.id)
 
 
 @receiver(post_save, sender=Director)
-def create_doc(sender, instance, **kwargs):
+def create_director(sender, instance, **kwargs):
     es = Elasticsearch()
     es.index(index='hack-index', doc_type='Director', body=model_to_dict(instance, exclude=['id']), id=instance.id)
 
 @receiver(post_save, sender=Comment)
-def create_doc(sender, instance, **kwargs):
+def create_comment(sender, instance, **kwargs):
     es = Elasticsearch()
     es.index(index='hack-index', doc_type='Comment', body=model_to_dict(instance, exclude=['id']), id=instance.id)
 
 
 
 @receiver(post_delete, sender=Movie)
-def delete_doc(sender, instance, **kwargs):
+def delete_movie(sender, instance, **kwargs):
     es = Elasticsearch()
     es.delete(index='hack-index', doc_type='Movie', id=instance.id)
 
 @receiver(post_delete, sender=Actor)
-def delete_doc(sender, instance, **kwargs):
+def delete_actor(sender, instance, **kwargs):
     es = Elasticsearch()
     es.delete(index='hack-index', doc_type='Actor', id=instance.id)
 
 @receiver(post_delete, sender=Director)
-def delete_doc(sender, instance, **kwargs):
+def delete_director(sender, instance, **kwargs):
     es = Elasticsearch()
     es.delete(index='hack-index', doc_type='Director', id=instance.id)
 
 @receiver(post_delete, sender=Comment)
-def delete_doc(sender, instance, **kwargs):
+def delete_comment(sender, instance, **kwargs):
     es = Elasticsearch()
     es.delete(index='hack-index', doc_type='Comment', id=instance.id)    

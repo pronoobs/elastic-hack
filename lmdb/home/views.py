@@ -9,9 +9,9 @@ from .forms import *
 from django.contrib import messages
 from django.core.mail import send_mail
 # Create your views here.
-
+from elasticsearch import Elasticsearch
 from django.shortcuts import render
-
+import json
 
 def advanced(request):
     form = SearchForm(request.POST or None)
@@ -44,24 +44,22 @@ def search(request):
     error = False
     if 'q' in request.GET:
         q = request.GET['q']
-    if not q:
-        error = True
-    else:
-        x = es.indices.get(index='hack-index', ignore=[400, 404])
-        print json.dumps(x,indent=4)
-        if 'status' not in x:
-            if query == '':
-                x = es.search(index='test-index', doc_type='', body={"query": {"match_all": {}}})
-            else:
-                x = es.search(index='test-index', doc_type='', body={"query": {"match": {"body": query}}})
-            print json.dumps(x, indent=4)
-            for i in x['hits']['hits']:
-                    print i['_id']
-        movies = Movie.objects.filter(title__icontains=q)
-        return render(request, 'search_results.html',
-                      {'movies': movies, 'query': q})
-    if error is True:
-        messages.error(request, "Enter something!")
+    es=Elasticsearch()    
+    x = es.indices.get(index='hack-index', ignore=[400, 404])
+    print json.dumps(x,indent=4)
+    if 'status' not in x:
+        print 'q= ',q
+        if q == '':
+            print 'here'
+            x = es.search(index='hack-index', doc_type='Movie', body={"query": {"match_all": {}}})
+        else:
+            x = es.search(index='hack-index', doc_type='Movie', body={"query": {"match": {"plot": q}}})
+        print json.dumps(x, indent=4)
+        for i in x['hits']['hits']:
+                print i['_id']
+    movies = Movie.objects.filter(title__icontains=q)
+    return render(request, 'search_results.html',
+                  {'movies': movies, 'query': q})
     return HttpResponseRedirect('/')
 
 
