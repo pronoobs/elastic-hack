@@ -47,7 +47,11 @@ class Movie(models.Model):
     @property  # http://www.blog.pythonlibrary.org/2014/01/20/python-201-properties/
     def average_rating(self):
         # http://stackoverflow.com/questions/28888399/aggregate-average-of-model-field-with-foreign-key-django-rest
-        return int(Comment.objects.filter(movie__id=self.id).aggregate(Avg('rating')).values()[0])
+        r=Comment.objects.filter(movie__id=self.id).aggregate(Avg('rating')).values()[0]
+        if type(r)==float:
+            return int(r)
+        else:
+            return 0
 
     def __str__(self):
         return self.title

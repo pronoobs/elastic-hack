@@ -26,9 +26,35 @@ def advanced(request):
         genres = form.cleaned_data['genres']
 
         m2 = [x.pk for x in Movie.objects.all() if x.average_rating >= min_rating]
+        m1=[]
+
+        q=form.cleaned_data['plot']
+        es=Elasticsearch()    
+        x = es.indices.get(index='hack-index', ignore=[400, 404])
+        print json.dumps(x,indent=4)
+        if 'status' not in x:
+            print 'q= ',q
+            if q == '':
+                #print 'here'
+                x = es.search(index='hack-index', doc_type='Movie', body={"query": {"match_all": {}}})
+            else:
+                x = es.search(index='hack-index', doc_type='Movie', body={"query": {"match": {"plot": q}}})
+            print json.dumps(x, indent=4)
+            for i in x['hits']['hits']:
+                     m1.append(i['_id'])
+            #search in comments
+            if q == '':
+                #print 'here'
+                x = es.search(index='hack-index', doc_type='Comment', body={"query": {"match_all": {}}})
+            else:
+                x = es.search(index='hack-index', doc_type='Comment', body={"query": {"match": {"text": q}}})
+            print json.dumps(x, indent=4)
+            for i in x['hits']['hits']:
+                     m1.append(i['_source']['movie'])
+        
 
         movies = (Movie.objects.filter(title__icontains=f1) | Movie.objects.filter(actors__in=f2)).filter(
-            genre__in=genres).filter(pk__in=m2)
+            genre__in=genres).filter(pk__in=m2).filter(pk__in=m1)
 
         context = {'movies': movies}
         return render(request, 'search_results.html', context)
@@ -44,19 +70,6 @@ def search(request):
     error = False
     if 'q' in request.GET:
         q = request.GET['q']
-    es=Elasticsearch()    
-    x = es.indices.get(index='hack-index', ignore=[400, 404])
-    print json.dumps(x,indent=4)
-    if 'status' not in x:
-        print 'q= ',q
-        if q == '':
-            print 'here'
-            x = es.search(index='hack-index', doc_type='Movie', body={"query": {"match_all": {}}})
-        else:
-            x = es.search(index='hack-index', doc_type='Movie', body={"query": {"match": {"plot": q}}})
-        print json.dumps(x, indent=4)
-        for i in x['hits']['hits']:
-                print i['_id']
     movies = Movie.objects.filter(title__icontains=q)
     return render(request, 'search_results.html',
                   {'movies': movies, 'query': q})
